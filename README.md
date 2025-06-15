@@ -55,22 +55,6 @@ npm run dev
 
 ---
 
-## 🔎 Example Endpoints
-
-| Method   | Endpoint                  | Description                                                             |
-| -------- | ------------------------- | ----------------------------------------------------------------------- |
-| `GET`    | `/users`                  | List all users (optional filters: `username`, `email`)                  |
-| `GET`    | `/users/:id`              | Get user by ID                                                          |
-| `GET`    | `/hosts`                  | List all hosts (optional filter: `name`)                                |
-| `GET`    | `/properties`             | List all properties (filters: `location`, `pricePerNight`, `amenities`) |
-| `GET`    | `/bookings?userId=abc123` | List bookings for a specific user                                       |
-| `POST`   | `/bookings`               | Create new booking                                                      |
-| `DELETE` | `/bookings/:id`           | Delete booking                                                          |
-
-> Note: Filters are case-sensitive. For example, `amenities=Wifi` must exactly match the value in the database.
-
----
-
 ## 🧪 Running Tests
 
 This project uses Newman to automate Postman tests.

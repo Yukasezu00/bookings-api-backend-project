@@ -36,11 +36,13 @@ router.get(
 
 router.post("/", authMiddleware, async (req, res) => {
   const { name } = req.body;
-  const newAmenity = await createAmenity(name);
-  if (!newAmenity) {
-    res.status(400).json("Name not found.");
-  } else {
+  try {
+    const newAmenity = await createAmenity(name);
     res.status(201).json(newAmenity);
+  } catch (err) {
+    const statusCode = err.status || 500;
+    const message = err.message || "Internal Server Error";
+    res.status(statusCode).json({ error: message });
   }
 });
 

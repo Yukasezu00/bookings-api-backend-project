@@ -44,19 +44,21 @@ router.post("/", authMiddleware, async (req, res) => {
     totalPrice,
     bookingStatus,
   } = req.body;
-  const newBooking = await createBooking(
-    userId,
-    propertyId,
-    checkinDate,
-    checkoutDate,
-    numberOfGuests,
-    totalPrice,
-    bookingStatus
-  );
-  if (!newBooking) {
-    res.status(400).json("UserId not found.");
-  } else {
+  try {
+    const newBooking = await createBooking(
+      userId,
+      propertyId,
+      checkinDate,
+      checkoutDate,
+      numberOfGuests,
+      totalPrice,
+      bookingStatus
+    );
     res.status(201).json(newBooking);
+  } catch (err) {
+    const statusCode = err.status || 500;
+    const message = err.message || "Internal Server Error";
+    res.status(statusCode).json({ error: message });
   }
 });
 

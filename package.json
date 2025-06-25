@@ -9,8 +9,9 @@
   },
   "scripts": {
     "start": "node src/index.js",
+    "reset-db": "npx prisma migrate reset --force",
     "dev": "nodemon src/index.js",
-    "test-positive": "newman run \"./postman/collections/Bookings API.json\" -e \"./postman/environments/Local.postman_environment.json\"",
+    "test-positive": "npm run reset-db&& newman run \"./postman/collections/Bookings API.json\" -e \"./postman/environments/Local.postman_environment.json\"",
     "test-negative": "newman run \"./postman/collections/Bookings API Negative.json\" -e \"./postman/environments/Local.postman_environment.json\"",
     "test": "npm run test-positive && npm run test-negative",
     "postinstall": "prisma generate"
@@ -25,7 +26,8 @@
     "jsonwebtoken": "^9.0.2",
     "prisma": "^6.7.0",
     "uuid": "^9.0.1",
-    "winston": "^3.10.0"
+    "winston": "^3.10.0",
+    "zod": "^3.25.67"
   },
   "devDependencies": {
     "newman": "^6.0.0",

@@ -37,18 +37,20 @@ router.get(
 router.post("/", authMiddleware, async (req, res) => {
   const { username, password, name, email, phoneNumber, profilePicture } =
     req.body;
-  const newUser = await createUser(
-    username,
-    password,
-    name,
-    email,
-    phoneNumber,
-    profilePicture
-  );
-  if (!newUser) {
-    res.status(400).json("Username not found.");
-  } else {
+  try {
+    const newUser = await createUser(
+      username,
+      password,
+      name,
+      email,
+      phoneNumber,
+      profilePicture
+    );
     res.status(201).json(newUser);
+  } catch (err) {
+    const statusCode = err.status || 500;
+    const message = err.message || "Internal Server Error";
+    res.status(statusCode).json({ error: message });
   }
 });
 

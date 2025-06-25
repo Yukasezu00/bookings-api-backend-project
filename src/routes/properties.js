@@ -46,21 +46,23 @@ router.post("/", authMiddleware, async (req, res) => {
     hostId,
     rating,
   } = req.body;
-  const newProperty = await createProperty(
-    title,
-    description,
-    location,
-    pricePerNight,
-    bedroomCount,
-    bathRoomCount,
-    maxGuestCount,
-    hostId,
-    rating
-  );
-  if (!newProperty) {
-    res.status(400).json("Title not found.");
-  } else {
+  try {
+    const newProperty = await createProperty(
+      title,
+      description,
+      location,
+      pricePerNight,
+      bedroomCount,
+      bathRoomCount,
+      maxGuestCount,
+      hostId,
+      rating
+    );
     res.status(201).json(newProperty);
+  } catch (err) {
+    const statusCode = err.status || 500;
+    const message = err.message || "Internal Server Error";
+    res.status(statusCode).json({ error: message });
   }
 });
 

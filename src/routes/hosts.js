@@ -44,20 +44,21 @@ router.post("/", authMiddleware, async (req, res) => {
     profilePicture,
     aboutMe,
   } = req.body;
-  const newHost = await createHost(
-    username,
-    password,
-    name,
-    email,
-    phoneNumber,
-    profilePicture,
-    aboutMe
-  );
-
-  if (!newHost) {
-    res.status(400).json("Username not found.");
-  } else {
+  try {
+    const newHost = await createHost(
+      username,
+      password,
+      name,
+      email,
+      phoneNumber,
+      profilePicture,
+      aboutMe
+    );
     res.status(201).json(newHost);
+  } catch (err) {
+    const statusCode = err.status || 500;
+    const message = err.message || "Internal Server Error";
+    res.status(statusCode).json({ error: message });
   }
 });
 

@@ -35,11 +35,13 @@ router.get(
 
 router.post("/", authMiddleware, async (req, res) => {
   const { userId, propertyId, rating, comment } = req.body;
-  const newReview = await createReview(userId, propertyId, rating, comment);
-  if (!newReview) {
-    res.status(400).json("UserId not found.");
-  } else {
+  try {
+    const newReview = await createReview(userId, propertyId, rating, comment);
     res.status(201).json(newReview);
+  } catch (err) {
+    const statusCode = err.status || 500;
+    const message = err.message || "Internal Server Error";
+    res.status(statusCode).json({ error: message });
   }
 });
 

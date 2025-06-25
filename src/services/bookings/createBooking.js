@@ -1,4 +1,6 @@
 import prisma from "../../../prisma/prisma.js";
+import { z } from "zod";
+import { CreateBookingSchema } from "../../utils/schema.js";
 
 const createBooking = async (
   userId,
@@ -9,13 +11,8 @@ const createBooking = async (
   totalPrice,
   bookingStatus
 ) => {
-  if (!userId) {
-    // throw new Error("UserId not found");
-    return null;
-  }
-
-  return prisma.booking.create({
-    data: {
+  try {
+    const validatedData = CreateBookingSchema.parse({
       userId,
       propertyId,
       checkinDate,
@@ -23,8 +20,24 @@ const createBooking = async (
       numberOfGuests,
       totalPrice,
       bookingStatus,
-    },
-  });
+    });
+    return prisma.booking.create({
+      data: validatedData,
+    });
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      const message = err.errors
+        .map((e) => `${e.path.join(".")}: ${e.message}`)
+        .join("; ");
+      const error = new Error(message);
+      error.status = 400;
+      throw error;
+    } else {
+      const err = new Error("Internal Server Error");
+      err.status = 500;
+      throw err;
+    }
+  }
 };
 
 export default createBooking;

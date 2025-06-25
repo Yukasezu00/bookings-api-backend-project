@@ -85,24 +85,6 @@ This runs the collections in the `/postman` folder using the environments in `/p
 
 ---
 
-### 🔁 Reset before Positive Tests
-
-To make sure all positive tests work reliably every time, reset the database right before running the tests:
-
-```bash
-npx prisma migrate reset
-npm run test-positive
-```
-
-This will:
-
-- Delete and recreate the database schema
-- Automatically reseed the database with test data from `prisma/seed.js`
-
-> ⚠️ Note: `migrate reset` wipes **all** data. Only use it in development/test mode.
-
----
-
 ## 🖥️ Using Prisma Studio (optional)
 
 To browse and inspect your database visually during development, you can use [Prisma Studio](https://www.prisma.io/studio):

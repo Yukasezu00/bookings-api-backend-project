@@ -52,6 +52,7 @@ npm run dev
 - ✅ Global error handling with custom messages
 - ✅ Error logging with Sentry
 - ✅ Seed data provided via `prisma/seed.js`
+- ✅ Inputvalidatie met Zod voor foutafhandeling bij onjuiste payloads
 
 ---
 
@@ -107,6 +108,8 @@ It opens an interactive UI in your browser, allowing you to view and edit all yo
 - JSON Web Token (JWT)
 - Sentry (for error tracking)
 - Postman & Newman (for testing)
+- Zod (voor inputvalidatie)
+
 
 ---
 

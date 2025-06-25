@@ -48,11 +48,11 @@ npm run dev
 - ✅ JWT-based Authentication
 - ✅ CRUD endpoints for Users, Hosts, Properties, Bookings, Amenities, and Reviews
 - ✅ Filtering with query parameters (e.g. `/users?username=jdoe`, `/properties?location=Malibu&amenities=Wifi`)
+- ✅ Inputvalidatie met Zod voor foutafhandeling bij onjuiste payloads
 - ✅ Relational data fetching with Prisma `include`
 - ✅ Global error handling with custom messages
 - ✅ Error logging with Sentry
 - ✅ Seed data provided via `prisma/seed.js`
-- ✅ Inputvalidatie met Zod voor foutafhandeling bij onjuiste payloads
 
 ---
 
@@ -106,10 +106,9 @@ It opens an interactive UI in your browser, allowing you to view and edit all yo
 - Express
 - Prisma ORM (with SQLite)
 - JSON Web Token (JWT)
+- Zod (voor inputvalidatie)
 - Sentry (for error tracking)
 - Postman & Newman (for testing)
-- Zod (voor inputvalidatie)
-
 
 ---
 

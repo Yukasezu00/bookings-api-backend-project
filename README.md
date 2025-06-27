@@ -76,6 +76,8 @@ Test collections and environments are stored in:
   /postman/collections
   /postman/environments
 
+To manually reset the database run: npx prisma migrate reset --force
+
 ------------------------------------------------------------
 
 🖥️  PRISMA STUDIO (OPTIONAL)

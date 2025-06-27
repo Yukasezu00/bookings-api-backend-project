@@ -22,9 +22,9 @@ It is a RESTful API for a fictional booking platform, built with Node.js, Expres
 
 3. Create a `.env` file in the root directory:
 
-   - DATABASE_URL="file:./prisma/dev.db"
-   - AUTH_SECRET_KEY=your_secret_key_here
-   - SENTRY_DSN=your_sentry_dsn_here
+  - DATABASE_URL="file:./prisma/dev.db"
+  - AUTH_SECRET_KEY=your_secret_key_here
+  - SENTRY_DSN=your_sentry_dsn_here
 
    💡 You can use any random string for the AUTH_SECRET_KEY.
    If you're not using Sentry, you can leave SENTRY_DSN empty.

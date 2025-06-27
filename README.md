@@ -81,7 +81,7 @@ Test collections and environments are stored in:
 
 To explore your local database visually during development:
 
-   npx prisma studio
+In a separate terminal, run: npx prisma studio
 
 This will open an interactive UI in your browser.
 

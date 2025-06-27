@@ -31,9 +31,9 @@ It is a RESTful API for a fictional booking platform, built with Node.js, Expres
 
 4. Run migrations and seed the database:
 
--npx prisma migrate dev --name init
+  - npx prisma migrate dev --name init
 
--npx prisma db seed
+  - npx prisma db seed
 
 6. Start the application:
    npm run dev

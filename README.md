@@ -1,5 +1,5 @@
 README
-Bookings API – Final Project
+# 📘 Bookings API – Final Project
 
 This is the final project for the Back-End Development module at Winc Academy.
 
@@ -7,9 +7,9 @@ It is a RESTful API for a fictional booking platform, built with Node.js, Expres
 
 ------------------------------------------------------------
 
-🚀 Getting Started
+## 🚀 Getting Started
 
-Installation
+### 🛠 Installation
 
 1. Clone the repository:
 

@@ -30,10 +30,12 @@ It is a RESTful API for a fictional booking platform, built with Node.js, Expres
    If you're not using Sentry, you can leave SENTRY_DSN empty.
 
 4. Run migrations and seed the database:
-   npx prisma migrate dev --name init
-   npx prisma db seed
 
-5. Start the application:
+-npx prisma migrate dev --name init
+
+-npx prisma db seed
+
+6. Start the application:
    npm run dev
 
 ------------------------------------------------------------

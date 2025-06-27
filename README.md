@@ -2,7 +2,7 @@
 
 This is the final project for the Back-End Development module at Winc Academy.
 
-It is a RESTful API for a fictional booking platform. The app is built with **Node.js**, **Express**, **SQLite**, and **Prisma ORM**. It includes full CRUD functionality, filtering, authentication, error tracking, and automated tests.
+It is a RESTful API for a fictional booking platform. The app is built with **Node.js**, **Express**, **SQLite**, and **Prisma ORM**. It includes full CRUD functionality working with Postman, filtering, authentication, error tracking, and automated tests.
 
 ---
 

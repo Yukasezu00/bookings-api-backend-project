@@ -47,7 +47,7 @@ npm run dev
 
 - ✅ JWT-based Authentication
 - ✅ CRUD endpoints for Users, Hosts, Properties, Bookings, Amenities, and Reviews
-- ✅ Filtering with query parameters (e.g. `/users?username=jdoe`, `/properties?location=Malibu&amenities=Wifi`)
+- ✅ Filtering with query parameters (e.g. `/users?username=jdoe`, `/properties?location=Malibu&pricePerNight=310.25&amenities=Washer`)
 - ✅ Inputvalidatie met Zod voor foutafhandeling bij onjuiste payloads
 - ✅ Relational data fetching with Prisma `include`
 - ✅ Global error handling with custom messages

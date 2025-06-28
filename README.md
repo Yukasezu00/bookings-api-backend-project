@@ -15,7 +15,6 @@ It is a RESTful API for a fictional booking platform. The app is built with **No
 
 ```bash
 npm install
-npm install zod
 ```
 
 3. Create a `.env` file in the root directory:

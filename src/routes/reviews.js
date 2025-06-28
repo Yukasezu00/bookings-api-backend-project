@@ -9,20 +9,24 @@ import authMiddleware from "../middleware/auth.js";
 
 const router = express.Router();
 
-// GET
-router.get("/", async (req, res) => {
-  const reviews = await getReviews();
-  res.status(200).json(reviews);
+// GET reviews (optioneel filter op userId en/of propertyId)
+router.get("/", async (req, res, next) => {
+  try {
+    const { userId, propertyId } = req.query;
+    const reviews = await getReviews(userId, propertyId);
+    res.status(200).json(reviews);
+  } catch (error) {
+    next(error);
+  }
 });
 
-// GET by ID
+// GET review by ID
 router.get(
   "/:id",
   async (req, res, next) => {
     try {
       const { id } = req.params;
       const review = await getReviewById(id);
-
       res.status(200).json(review);
     } catch (error) {
       next(error);
@@ -31,8 +35,7 @@ router.get(
   notFoundErrorHandler
 );
 
-// POST
-
+// POST new review (auth required)
 router.post("/", authMiddleware, async (req, res) => {
   const { userId, propertyId, rating, comment } = req.body;
   try {
@@ -45,7 +48,7 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
-//PUT
+// PUT update review by ID (auth required)
 router.put(
   "/:id",
   authMiddleware,
@@ -68,7 +71,7 @@ router.put(
   notFoundErrorHandler
 );
 
-//Delete
+// DELETE review by ID (auth required)
 router.delete(
   "/:id",
   authMiddleware,
@@ -76,7 +79,6 @@ router.delete(
     try {
       const { id } = req.params;
       const deletedReviewId = await deleteReview(id);
-
       res.status(200).json({
         message: `Review with id ${deletedReviewId} was deleted!`,
       });

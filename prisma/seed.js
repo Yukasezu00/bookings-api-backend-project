@@ -16,7 +16,7 @@ async function main() {
   const { hosts } = hostData;
   const { amenities } = amenityData;
 
-  // amenity
+  // Amenities
   for (const amenity of amenities) {
     await prisma.amenity.upsert({
       where: { id: amenity.id },
@@ -25,16 +25,7 @@ async function main() {
     });
   }
 
-  // booking
-  for (const booking of bookings) {
-    await prisma.booking.upsert({
-      where: { id: booking.id },
-      update: {},
-      create: booking,
-    });
-  }
-
-  //host
+  // Hosts
   for (const host of hosts) {
     await prisma.host.upsert({
       where: { id: host.id },
@@ -43,16 +34,33 @@ async function main() {
     });
   }
 
-  //property
+  // Properties + koppel 2 willekeurige amenities
   for (const property of properties) {
+    const shuffledAmenities = [...amenities].sort(() => 0.5 - Math.random());
+    const selectedAmenities = shuffledAmenities.slice(0, 2); // 2 willekeurige amenities
+
     await prisma.property.upsert({
       where: { id: property.id },
       update: {},
-      create: property,
+      create: {
+        ...property,
+        amenities: {
+          connect: selectedAmenities.map((a) => ({ id: a.id })),
+        },
+      },
     });
   }
 
-  //review
+  // Users
+  for (const user of users) {
+    await prisma.user.upsert({
+      where: { id: user.id },
+      update: {},
+      create: user,
+    });
+  }
+
+  // Reviews
   for (const review of reviews) {
     await prisma.review.upsert({
       where: { id: review.id },
@@ -61,17 +69,17 @@ async function main() {
     });
   }
 
-  //user
-  for (const user of users) {
-    await prisma.user.upsert({
-      where: { id: user.id },
+  // Bookings
+  for (const booking of bookings) {
+    await prisma.booking.upsert({
+      where: { id: booking.id },
       update: {},
-      create: user,
+      create: booking,
     });
   }
 }
 
-// promise handlers
+// Run script
 main()
   .then(async () => {
     await prisma.$disconnect();

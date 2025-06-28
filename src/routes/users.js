@@ -9,21 +9,24 @@ import authMiddleware from "../middleware/auth.js";
 
 const router = express.Router();
 
-// GET
-router.get("/", async (req, res) => {
-  const { username, email } = req.query;
-  const users = await getUsers(username, email);
-  res.status(200).json(users);
+// GET users with optional filters
+router.get("/", async (req, res, next) => {
+  try {
+    const { username, email } = req.query;
+    const users = await getUsers(username, email);
+    res.status(200).json(users);
+  } catch (error) {
+    next(error);
+  }
 });
 
-// GET by ID
+// GET user by ID
 router.get(
   "/:id",
   async (req, res, next) => {
     try {
       const { id } = req.params;
       const user = await getUserById(id);
-
       res.status(200).json(user);
     } catch (error) {
       next(error);
@@ -32,8 +35,7 @@ router.get(
   notFoundErrorHandler
 );
 
-// POST
-
+// POST new user
 router.post("/", authMiddleware, async (req, res) => {
   const { username, password, name, email, phoneNumber, profilePicture } =
     req.body;
@@ -54,7 +56,7 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
-//PUT
+// PUT update user by ID
 router.put(
   "/:id",
   authMiddleware,
@@ -80,7 +82,7 @@ router.put(
   notFoundErrorHandler
 );
 
-//Delete
+// DELETE user by ID
 router.delete(
   "/:id",
   authMiddleware,
@@ -88,7 +90,6 @@ router.delete(
     try {
       const { id } = req.params;
       const deletedUserId = await deleteUser(id);
-
       res.status(200).json({
         message: `User with id ${deletedUserId} was deleted!`,
       });

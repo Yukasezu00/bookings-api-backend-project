@@ -1,113 +1,118 @@
-📘  BOOKINGS API – FINAL PROJECT
-================================
+# Bookings API Final Project
 
 This is the final project for the Back-End Development module at Winc Academy.
 
-It is a RESTful API for a fictional booking platform, built with Node.js, Express, SQLite, and Prisma ORM. It includes full CRUD functionality, filtering, JWT-based authentication, error tracking with Sentry, and automated tests via Postman & Newman.
+It is a RESTful API for a fictional booking platform. The app is built with **Node.js**, **Express**, **SQLite**, and **Prisma ORM**. It includes full CRUD functionality working with Postman, filtering, authentication, error tracking, and automated tests.
 
-------------------------------------------------------------
+---
 
-🚀  GETTING STARTED
-===================
+## 🚀 Getting Started
 
-🛠  INSTALLATION
-----------------
+### Installation
 
-1. Clone the repository:
-   git clone https://github.com/Yukasezu00/bookings-api-backend-project.git
-   cd bookings-api-backend-project
+1. Clone the repository
+2. Install the dependencies
 
-2. Install all dependencies:
-   npm install
+```bash
+npm install
+npm install zod
+```
 
 3. Create a `.env` file in the root directory:
 
-  - DATABASE_URL="file:./prisma/dev.db"
-  - AUTH_SECRET_KEY=your_secret_key_here
-  - SENTRY_DSN=your_sentry_dsn_here
+```env
+DATABASE_URL="file:./dev.db"
+AUTH_SECRET_KEY=your_secret_key_here
+SENTRY_DSN=your_sentry_dsn_here
+```
 
-   💡 You can use any random string for the AUTH_SECRET_KEY.
-   If you're not using Sentry, you can leave SENTRY_DSN empty.
+> 💡 Tip: You can use any random string as your `AUTH_SECRET_KEY`.  
+> If you're not using Sentry, you can leave `SENTRY_DSN` empty.
 
-4. Run migrations and seed the database:
+4. Run the database migration and seed:
 
-  - npx prisma migrate dev --name init
+```bash
+npx prisma migrate dev --name init
+npx prisma db seed
+```
 
-  - npx prisma db seed
+5. Start the app:
 
-6. Start the application:
-   npm run dev
+```bash
+npm run dev
+```
 
-------------------------------------------------------------
+---
 
-📚  FEATURES
-===========
+## 📚 Features
 
-- JWT-based Authentication  
-- CRUD for Users, Hosts, Properties, Bookings, Amenities, and Reviews  
-- Query-based filtering (e.g. /users?username=jdoe)  
-- Input validation with Zod  
-- Relational queries using Prisma’s `include`  
-- Global error handling with custom messages  
-- Error logging with Sentry  
-- Seed data from `prisma/seed.js`
+- ✅ JWT-based Authentication
+- ✅ CRUD endpoints for Users, Hosts, Properties, Bookings, Amenities, and Reviews
+- ✅ Filtering with query parameters (e.g. `/users?username=jdoe`, `/properties?location=Malibu&amenities=Wifi`)
+- ✅ Inputvalidatie met Zod voor foutafhandeling bij onjuiste payloads
+- ✅ Relational data fetching with Prisma `include`
+- ✅ Global error handling with custom messages
+- ✅ Error logging with Sentry
+- ✅ Seed data provided via `prisma/seed.js`
 
-------------------------------------------------------------
+---
 
-🧪  RUNNING TESTS
-==================
+## 🧪 Running Tests
 
-This project uses Newman to automate tests based on Postman collections.
+This project uses Newman to automate Postman tests.
 
-1. Start the API:
-   npm run dev
+### To run tests:
 
-2. In a separate terminal, run:
+1. Start the server first:
 
-   Positive tests:
-   npm run test-positive
+```bash
+npm run dev
+```
 
-   Negative tests:
-   npm run test-negative
+2. Ensure your Postman environment file is pointing to the correct URL (`http://localhost:3000`)
 
-⚠️  Warning: The tests will reset the database and perform destructive operations (e.g. DELETE).
+3. Then run:
 
-Test collections and environments are stored in:
-  /postman/collections
-  /postman/environments
+```bash
+# For positive tests:
+npm run test-positive
 
-To manually reset the database run: npx prisma migrate reset --force
+# For negative tests:
+npm run test-negative
+```
 
-------------------------------------------------------------
+This runs the collections in the `/postman` folder using the environments in `/postman/environments`.
 
-🖥️  PRISMA STUDIO (OPTIONAL)
-=============================
+⚠️ Tests will delete data (e.g. DELETE requests), so it's important to restart your server afterward to reset the state.
 
-To explore your local database visually during development:
+---
 
-In a separate terminal, run: npx prisma studio
+## 🖥️ Using Prisma Studio (optional)
 
-This will open an interactive UI in your browser.
+To browse and inspect your database visually during development, you can use [Prisma Studio](https://www.prisma.io/studio):
 
-⚠️  Use only in development — changes are applied directly to your database.
+```bash
+npx prisma studio
+```
 
-------------------------------------------------------------
+It opens an interactive UI in your browser, allowing you to view and edit all your tables.
 
-🧰  TECH STACK
-==============
+> Note: Only use Prisma Studio in development. It directly changes your database content.
 
-- Node.js  
-- Express  
-- Prisma ORM (SQLite)  
-- JSON Web Token (JWT)  
-- Zod (input validation)  
-- Sentry (error logging)  
-- Postman & Newman (API testing)
+---
 
-------------------------------------------------------------
+## 🧰 Tech Stack
 
-👨‍💻  AUTHOR
-===========
+- Node.js
+- Express
+- Prisma ORM (with SQLite)
+- JSON Web Token (JWT)
+- Zod (voor inputvalidatie)
+- Sentry (for error tracking)
+- Postman & Newman (for testing)
 
-Final project submitted by **Yunus Yildiz**  
-Winc Academy – Back-End Development Track
+---
+
+## 👨‍💻 Author
+
+Final project submitted by **Yunus Yildiz** for Winc Academy – Back-End Development Track.

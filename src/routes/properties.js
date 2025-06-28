@@ -9,21 +9,24 @@ import authMiddleware from "../middleware/auth.js";
 
 const router = express.Router();
 
-// GET
-router.get("/", async (req, res) => {
-  const { location, pricePerNight } = req.query;
-  const properties = await getProperties(location, pricePerNight);
-  res.status(200).json(properties);
+// GET all properties with optional filters: location, pricePerNight, amenities
+router.get("/", async (req, res, next) => {
+  try {
+    const { location, pricePerNight, amenities } = req.query;
+    const properties = await getProperties(location, pricePerNight, amenities);
+    res.status(200).json(properties);
+  } catch (error) {
+    next(error);
+  }
 });
 
-// GET by ID
+// GET property by ID
 router.get(
   "/:id",
   async (req, res, next) => {
     try {
       const { id } = req.params;
       const property = await getPropertyById(id);
-
       res.status(200).json(property);
     } catch (error) {
       next(error);
@@ -32,8 +35,7 @@ router.get(
   notFoundErrorHandler
 );
 
-// POST
-
+// POST create new property
 router.post("/", authMiddleware, async (req, res) => {
   const {
     title,
@@ -46,6 +48,7 @@ router.post("/", authMiddleware, async (req, res) => {
     hostId,
     rating,
   } = req.body;
+
   try {
     const newProperty = await createProperty(
       title,
@@ -66,7 +69,7 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
-//PUT
+// PUT update property by ID
 router.put(
   "/:id",
   authMiddleware,
@@ -84,6 +87,7 @@ router.put(
         hostId,
         rating,
       } = req.body;
+
       const updatedProperty = await updatePropertyById(
         id,
         title,
@@ -96,6 +100,7 @@ router.put(
         hostId,
         rating
       );
+
       res.status(200).json(updatedProperty);
     } catch (error) {
       next(error);
@@ -104,7 +109,7 @@ router.put(
   notFoundErrorHandler
 );
 
-//Delete
+// DELETE property by ID
 router.delete(
   "/:id",
   authMiddleware,
@@ -112,7 +117,6 @@ router.delete(
     try {
       const { id } = req.params;
       const deletedPropertyId = await deleteProperty(id);
-
       res.status(200).json({
         message: `Property with id ${deletedPropertyId} was deleted!`,
       });

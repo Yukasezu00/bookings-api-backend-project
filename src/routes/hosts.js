@@ -9,21 +9,24 @@ import authMiddleware from "../middleware/auth.js";
 
 const router = express.Router();
 
-// GET
-router.get("/", async (req, res) => {
-  const { name } = req.query;
-  const hosts = await getHosts(name);
-  res.status(200).json(hosts);
+// GET hosts with optional filtering by name
+router.get("/", async (req, res, next) => {
+  try {
+    const { name } = req.query;
+    const hosts = await getHosts(name);
+    res.status(200).json(hosts);
+  } catch (error) {
+    next(error);
+  }
 });
 
-// GET by ID
+// GET host by ID
 router.get(
   "/:id",
   async (req, res, next) => {
     try {
       const { id } = req.params;
       const host = await getHostById(id);
-
       res.status(200).json(host);
     } catch (error) {
       next(error);
@@ -32,8 +35,7 @@ router.get(
   notFoundErrorHandler
 );
 
-// POST
-
+// POST new host
 router.post("/", authMiddleware, async (req, res) => {
   const {
     username,
@@ -44,6 +46,7 @@ router.post("/", authMiddleware, async (req, res) => {
     profilePicture,
     aboutMe,
   } = req.body;
+
   try {
     const newHost = await createHost(
       username,
@@ -62,7 +65,7 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
-//PUT
+// PUT update host by ID
 router.put(
   "/:id",
   authMiddleware,
@@ -96,7 +99,7 @@ router.put(
   notFoundErrorHandler
 );
 
-//Delete
+// DELETE host by ID
 router.delete(
   "/:id",
   authMiddleware,
@@ -104,7 +107,6 @@ router.delete(
     try {
       const { id } = req.params;
       const deletedHostId = await deleteHost(id);
-
       res.status(200).json({
         message: `Host with id ${deletedHostId} was deleted!`,
       });

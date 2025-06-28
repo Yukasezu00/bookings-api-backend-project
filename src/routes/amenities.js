@@ -9,21 +9,24 @@ import authMiddleware from "../middleware/auth.js";
 
 const router = express.Router();
 
-// GET
-router.get("/", async (req, res) => {
-  const { name } = req.query;
-  const amenities = await getAmenities(name);
-  res.status(200).json(amenities);
+// GET all amenities (optioneel filter op name)
+router.get("/", async (req, res, next) => {
+  try {
+    const { name } = req.query;
+    const amenities = await getAmenities(name);
+    res.status(200).json(amenities);
+  } catch (error) {
+    next(error);
+  }
 });
 
-// GET by ID
+// GET amenity by ID
 router.get(
   "/:id",
   async (req, res, next) => {
     try {
       const { id } = req.params;
       const amenity = await getAmenityById(id);
-
       res.status(200).json(amenity);
     } catch (error) {
       next(error);
@@ -32,8 +35,7 @@ router.get(
   notFoundErrorHandler
 );
 
-// POST
-
+// POST create new amenity
 router.post("/", authMiddleware, async (req, res) => {
   const { name } = req.body;
   try {
@@ -46,7 +48,7 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
-//PUT
+// PUT update amenity by ID
 router.put(
   "/:id",
   authMiddleware,
@@ -63,7 +65,7 @@ router.put(
   notFoundErrorHandler
 );
 
-//Delete
+// DELETE amenity by ID
 router.delete(
   "/:id",
   authMiddleware,
@@ -71,7 +73,6 @@ router.delete(
     try {
       const { id } = req.params;
       const deletedAmenityId = await deleteAmenity(id);
-
       res.status(200).json({
         message: `Amenity with id ${deletedAmenityId} was deleted!`,
       });

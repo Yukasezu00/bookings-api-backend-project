@@ -9,21 +9,24 @@ import authMiddleware from "../middleware/auth.js";
 
 const router = express.Router();
 
-// GET
-router.get("/", async (req, res) => {
-  const { userId } = req.query;
-  const bookings = await getBookings(userId);
-  res.status(200).json(bookings);
+// GET all bookings (optionally filtered by userId)
+router.get("/", async (req, res, next) => {
+  try {
+    const { userId } = req.query;
+    const bookings = await getBookings(userId);
+    res.status(200).json(bookings);
+  } catch (error) {
+    next(error);
+  }
 });
 
-// GET by ID
+// GET booking by ID
 router.get(
   "/:id",
   async (req, res, next) => {
     try {
       const { id } = req.params;
       const booking = await getBookingById(id);
-
       res.status(200).json(booking);
     } catch (error) {
       next(error);
@@ -32,8 +35,7 @@ router.get(
   notFoundErrorHandler
 );
 
-// POST
-
+// POST new booking
 router.post("/", authMiddleware, async (req, res) => {
   const {
     userId,
@@ -62,7 +64,7 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
-//PUT
+// PUT update booking by ID
 router.put(
   "/:id",
   authMiddleware,
@@ -96,7 +98,7 @@ router.put(
   notFoundErrorHandler
 );
 
-//Delete
+// DELETE booking by ID
 router.delete(
   "/:id",
   authMiddleware,
@@ -104,7 +106,6 @@ router.delete(
     try {
       const { id } = req.params;
       const deletedBookingId = await deleteBooking(id);
-
       res.status(200).json({
         message: `Booking with id ${deletedBookingId} was deleted!`,
       });

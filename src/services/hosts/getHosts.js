@@ -1,10 +1,14 @@
 import prisma from "../../../prisma/prisma.js";
 
 const getHosts = async (name) => {
-  return prisma.host.findMany({
-    where: {
-      name,
-    },
+  const whereClause = {};
+
+  if (name) {
+    whereClause.name = name;
+  }
+
+  const hosts = await prisma.host.findMany({
+    where: Object.keys(whereClause).length > 0 ? whereClause : undefined,
     select: {
       id: true,
       username: true,
@@ -15,6 +19,15 @@ const getHosts = async (name) => {
       aboutMe: true,
     },
   });
+
+  if (!hosts || hosts.length === 0) {
+    const error = new Error("No hosts found matching the given criteria.");
+    error.status = 404;
+    error.name = "NotFoundError";
+    throw error;
+  }
+
+  return hosts;
 };
 
 export default getHosts;

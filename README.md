@@ -1,3 +1,9 @@
+![Winc Academy Badge](https://img.shields.io/badge/academy-Winc-blue)
+![Node.js](https://img.shields.io/badge/Node.js-18.x-green)
+![Express](https://img.shields.io/badge/Express.js-4.x-green)
+![Prisma](https://img.shields.io/badge/Prisma-4.x-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+
 # Bookings API Final Project
 
 This is the final project for the Back-End Development module at Winc Academy.

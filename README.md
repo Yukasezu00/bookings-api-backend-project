@@ -2,6 +2,8 @@
 ![Node.js](https://img.shields.io/badge/Node.js-18.x-green)
 ![Express](https://img.shields.io/badge/Express.js-4.x-green)
 ![Prisma](https://img.shields.io/badge/Prisma-4.x-blue)
+![SQLite](https://img.shields.io/badge/SQLite-3.x-blue)
+![Sentry](https://img.shields.io/badge/Sentry-Error%20Tracking-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 # Bookings API Final Project

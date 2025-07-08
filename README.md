@@ -85,6 +85,7 @@ This runs the collections in the `/postman` folder using the environments in `/p
 ⚠️ Tests will delete data (e.g. DELETE requests), so it's important to restart your server afterward to reset the state.
 
 - use the command npx prisma migrate reset to reset the database
+- then use the command npx prisma db seed to re-seed the starter data.
 
 ---
 
